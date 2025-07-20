@@ -10,22 +10,9 @@ export class Player extends Entity {
   }
 
   async moveAlong(board: Board, path: CellPosition[]): Promise<void> {
-    const duration = 150;
     for (let i = 1; i < path.length; i++) {
-      await new Promise<void>((resolve) => {
-        const pos = path[i];
-        const { x, y } = board.worldPosition(pos);
-        this.scene.tweens.add({
-          targets: this.display,
-          x,
-          y,
-          duration,
-          onComplete: () => {
-            this.position = pos;
-            resolve();
-          },
-        });
-      });
+      const pos = path[i];
+      await this.animateMove(board, pos);
     }
   }
 }
